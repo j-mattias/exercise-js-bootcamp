@@ -281,3 +281,133 @@ console.log("Ceil: ", Math.ceil(1337.48));
 console.log("Round: ",Math.round(1337.497));
 
 // 43
+function random(max) {
+    return Math.floor(Math.random() * max);
+    // return Math.floor(Math.random() * (max + 1));
+}
+console.log(random(100));
+
+// 44
+function randomPassword(n) {
+    const chars = "abcdefghijklmnopqrstuvwxyzåäöABCDEFGHIJKLMNOPQRSTUVWXYZÅÄÖ0123456789";
+    let password = "";
+    for (let i = 0; i < n; i++) {
+        password += chars[random(chars.length)];
+    }
+    return password;
+}
+console.log(randomPassword(7));
+
+// 45
+names = ["sixten", "Eva", "Ali", "Kim", "Greger", "Alicia"];
+function randomName(names) {
+    return names[random(names.length)];
+}
+console.log(randomName(names));
+
+// 46
+// One is anonymous with a parameter and stored in a variable. 
+// The other is a named function with no parameter.
+
+// 47
+// "Hello Again Again!" > "Hello Again!" > "Hello!"
+// HelloAgainAgain() gets called > prints out "Hello Again Again!" > calls helloAgain() > 
+// prints out "Hello Again!" > calls hello() > prints out "Hello!"
+
+// 48
+printPokemons();
+function printPokemons() {
+    let pokemons = ["Pikachu", "Charmander", "Bulbasaur", "Squirtle"];
+    for (let i = 0; i <= pokemons.length; i++) {
+        console.log("One awesome pokemon is " + pokemons[i]);
+    }
+}
+
+// 49
+console.log(reverseString("hello"));
+function reverseString(str) {
+    let newString = "";
+    for (let i = str.length - 1; i >= 0; i--) {
+        newString += str[i];
+    }
+    return newString;
+}
+
+// Async / promises
+// 50
+
+// DOM manipulation
+// Single selector
+// 56
+const h2Ref = document.querySelector("article > h2");
+console.log(h2Ref);
+
+// 57
+const lastLiRef = document.querySelector("ul > li:last-child");
+const thirdLiRef = document.querySelector("ul > li:nth-child(3)");
+console.log(lastLiRef, thirdLiRef);
+
+// Select All (node list)
+// 58
+document.querySelectorAll("ul > li").forEach(item => item.textContent = item.textContent.toUpperCase());
+
+// Value from input
+// 59
+const emailRef = document.querySelector("#email").value;
+console.log(emailRef);
+
+// 60
+const optionsRef = document.querySelector("#options").value;
+console.log(optionsRef);
+
+// Attributes
+// 61
+const imgSrcRef = document.querySelector(".awesome").src;
+console.log(imgSrcRef);
+
+// 62
+const isCheckboxChecked = document.querySelector("#gdpr-ok").checked;
+console.log(isCheckboxChecked);
+
+// CSS
+// 63
+document.querySelector("#main-nav").classList.add("show");
+
+// 64
+document.querySelector("#home").classList.toggle("active");
+
+// 65
+const galleryRef = document.querySelectorAll(".gallery > img");
+galleryRef.forEach(img => img.classList.add("shadow"));
+
+// Create content
+// 66
+const mainTitleRef = document.createElement("h1");
+mainTitleRef.textContent = "Welcome";
+
+const bodyRef = document.querySelector("body");
+bodyRef.appendChild(mainTitleRef);
+
+// 67
+
+// Events
+// 68
+document.querySelector("button").addEventListener("click", () => {
+    console.log("go go go!");
+});
+
+// 69
+const fruitListRef = document.querySelectorAll("ul > li");
+fruitListRef.forEach(fruit => {
+    fruit.addEventListener("click", () => {
+        alert(`Jag älskar ${fruit.textContent}!!!`);
+    });
+});
+
+// 70
+const passwordRef = document.querySelector("#password");
+passwordRef.addEventListener("keyup", (e) => {
+    if (e.key === "Enter") {
+        console.log(e.target.value);
+    }
+});

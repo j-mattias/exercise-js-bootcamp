@@ -278,7 +278,7 @@ console.log("Floor: ", Math.floor(1337.51));
 console.log("Ceil: ", Math.ceil(1337.48));
 
 // 42
-console.log("Round: ",Math.round(1337.497));
+console.log("Round: ", Math.round(1337.497));
 
 // 43
 function random(max) {
@@ -306,12 +306,12 @@ function randomName(names) {
 console.log(randomName(names));
 
 // 46
-// One is anonymous with a parameter and stored in a variable. 
+// One is anonymous with a parameter and stored in a variable.
 // The other is a named function with no parameter.
 
 // 47
 // "Hello Again Again!" > "Hello Again!" > "Hello!"
-// HelloAgainAgain() gets called > prints out "Hello Again Again!" > calls helloAgain() > 
+// HelloAgainAgain() gets called > prints out "Hello Again Again!" > calls helloAgain() >
 // prints out "Hello Again!" > calls hello() > prints out "Hello!"
 
 // 48
@@ -335,6 +335,87 @@ function reverseString(str) {
 
 // Async / promises
 // 50
+// Pending, Fulfilled, Rejected
+
+// 51
+// getData(url)
+//     .then((data) => console.log(data))
+//     .catch(err);
+
+// 52
+// try {
+//     const data = await getData(url);
+//     console.log(data);
+// } catch (err) {
+//     console.log(err);
+// }
+
+// API-interaktion med fetch()
+// 53
+const url = `https://api.chucknorris.io/jokes/random`;
+chuckMe(url)
+    .then((joke) => console.log(joke))
+    .catch((err) => console.log(err));
+
+async function chuckMe(url) {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Status code: ${response.status}`);
+        }
+        const json = await response.json();
+        return json.value;
+    } catch (err) {
+        return err.message;
+    }
+}
+
+// 54
+const url2 = `https://jsonplaceholder.typicode.com/posts`;
+let data = {
+    id: 1,
+    joke: "How many ears does Spock have? - Three; Left, right and the final front ear.",
+    funny: true,
+};
+
+// fetch(url2, {
+//     method: "POST",
+//     body: JSON.stringify(data),
+//     headers: {
+//         "Content-type": "application/json; charset=UTF-8",
+//     },
+// })
+// .then((response) => response.json())
+// .then((json) => console.log(json))
+// .catch(err => console.log(err));
+
+postMe(url2, data);
+async function postMe(url, data) {
+    const post = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json; charset=UTF-8",
+        },
+    });
+    const json = await post.json();
+    console.log(json);
+}
+
+// 55
+const url3 = `https://jsonplaceholder.typicode.com/posts/1`;
+data.joke = "RIP, boiling water. - You will be mist.";
+
+fetch(url3, {
+    method: "PUT",
+    body: JSON.stringify(data),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8",
+    },
+})
+    .then((response) => response.json())
+    .then((json) => console.log(json))
+    .catch((err) => console.log(err));
 
 // DOM manipulation
 // Single selector
@@ -349,7 +430,9 @@ console.log(lastLiRef, thirdLiRef);
 
 // Select All (node list)
 // 58
-document.querySelectorAll("ul > li").forEach(item => item.textContent = item.textContent.toUpperCase());
+document
+    .querySelectorAll("ul > li")
+    .forEach((item) => (item.textContent = item.textContent.toUpperCase()));
 
 // Value from input
 // 59
@@ -378,7 +461,7 @@ document.querySelector("#home").classList.toggle("active");
 
 // 65
 const galleryRef = document.querySelectorAll(".gallery > img");
-galleryRef.forEach(img => img.classList.add("shadow"));
+galleryRef.forEach((img) => img.classList.add("shadow"));
 
 // Create content
 // 66
@@ -389,6 +472,36 @@ const bodyRef = document.querySelector("body");
 bodyRef.appendChild(mainTitleRef);
 
 // 67
+const url4 = `https://api.chucknorris.io/jokes/random`;
+getJoke(url4, createJokeSection);
+
+function createJokeSection(imgSrc, headingText, linkUrl) {
+    const sectionRef = document.createElement("section");
+    const imgRef = document.createElement("img");
+    imgRef.src = imgSrc;
+    // sectionRef.appendChild(imgRef);
+
+    const headingRef = document.createElement("h2");
+    headingRef.textContent = headingText;
+    // sectionRef.appendChild(headingRef);
+
+    const linkRef = document.createElement("a");
+    linkRef.href = linkUrl;
+    linkRef.textContent = linkUrl;
+    // sectionRef.appendChild(linkRef);
+
+    sectionRef.append(imgRef, headingRef, linkRef);
+    document.querySelector("body").appendChild(sectionRef);
+}
+
+async function getJoke(url, createFn) {
+    const response = await fetch(url);
+    const json = await response.json();
+
+    console.log("67: random joke: ", json);
+
+    createFn(json.icon_url, json.value, json.url);
+}
 
 // Events
 // 68
@@ -398,7 +511,7 @@ document.querySelector("button").addEventListener("click", () => {
 
 // 69
 const fruitListRef = document.querySelectorAll("ul > li");
-fruitListRef.forEach(fruit => {
+fruitListRef.forEach((fruit) => {
     fruit.addEventListener("click", () => {
         alert(`Jag älskar ${fruit.textContent}!!!`);
     });
